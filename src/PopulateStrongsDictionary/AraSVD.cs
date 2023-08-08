@@ -201,7 +201,7 @@ namespace PopulateStrongsDictionary
                         {
                             refrs = refrs + r + ", ";
                         }
-                        refrs = refrs.Substring(0, refrs.Length - 1);
+                        refrs = refrs.Substring(0, refrs.Length - 2);
                         if (strongs[i].Length > 5)
                         {
                             int x = 0;

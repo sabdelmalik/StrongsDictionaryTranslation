@@ -140,7 +140,8 @@ namespace PopulateStrongsDictionary
 
             if (string.IsNullOrEmpty(sourceSpreadsheets) ||
                 string.IsNullOrEmpty(translatedSpreadsheets) ||
-                string.IsNullOrEmpty(taggedBibleFile))
+                string.IsNullOrEmpty(taggedBibleFile) ||
+                selectedLanguage < 1)
             {
                 GetConfiguration();
                 return;
