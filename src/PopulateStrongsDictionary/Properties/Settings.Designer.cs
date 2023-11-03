@@ -70,5 +70,41 @@ namespace PopulateStrongsDictionary.Properties {
                 this["selectedLanguage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string translatedTabSeparatedText {
+            get {
+                return ((string)(this["translatedTabSeparatedText"]));
+            }
+            set {
+                this["translatedTabSeparatedText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sourceTabSeparatedText {
+            get {
+                return ((string)(this["sourceTabSeparatedText"]));
+            }
+            set {
+                this["sourceTabSeparatedText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool dictionarySpreadsheets {
+            get {
+                return ((bool)(this["dictionarySpreadsheets"]));
+            }
+            set {
+                this["dictionarySpreadsheets"] = value;
+            }
+        }
     }
 }

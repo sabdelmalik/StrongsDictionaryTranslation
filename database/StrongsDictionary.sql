@@ -31,7 +31,10 @@ CREATE TABLE IF NOT EXISTS public.strongs_numbers
     english_translation character varying(128) COLLATE pg_catalog."default" NOT NULL,
     long_text text COLLATE pg_catalog."default",
     short_text text COLLATE pg_catalog."default",
+    step_united_reason character varying(32),
+    step_type character varying(32),
     transliteration character varying(128) COLLATE pg_catalog."default",
+    pronunciation character varying(128),
     CONSTRAINT "StrongsNumbers_pkey" PRIMARY KEY (id),
     CONSTRAINT strong_numbers_unique UNIQUE (strongs_number, d_strong)
 );
@@ -91,6 +94,21 @@ CREATE TABLE IF NOT EXISTS public.strongs_references
     "references" text COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Strongs_references_pkey" PRIMARY KEY (id),
     CONSTRAINT strongs_references_augmented_strong UNIQUE (strongs_number, d_strong)
+);
+
+CREATE TABLE IF NOT EXISTS public.updated_translation
+(
+    id bigserial NOT NULL,
+    language_id integer NOT NULL,
+    strongs_number character(5) NOT NULL,
+    d_strong character(1),
+    transliteration character varying(128),
+    translated_word character varying(128),
+    translated_text text,
+    reviewer_initials character varying(32),
+    approved boolean DEFAULT FALSE,
+    approver_initials character varying(32),
+    PRIMARY KEY (id)
 );
 
 ALTER TABLE IF EXISTS public.bible_text

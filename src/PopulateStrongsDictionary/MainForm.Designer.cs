@@ -33,15 +33,20 @@
             toolStrip1 = new ToolStrip();
             toolStripButtonSettings = new ToolStripButton();
             toolStripButtonBuild = new ToolStripButton();
+            menuStrip1 = new MenuStrip();
+            updateToolStripMenuItem = new ToolStripMenuItem();
+            rebuildReferencesToolStripMenuItem = new ToolStripMenuItem();
+            transliterationToolStripMenuItem = new ToolStripMenuItem();
             toolStrip1.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // traceBox
             // 
             traceBox.Dock = DockStyle.Fill;
-            traceBox.Location = new Point(0, 0);
+            traceBox.Location = new Point(0, 55);
             traceBox.Name = "traceBox";
-            traceBox.Size = new Size(800, 450);
+            traceBox.Size = new Size(800, 395);
             traceBox.TabIndex = 1;
             traceBox.Text = "";
             // 
@@ -49,7 +54,7 @@
             // 
             toolStrip1.ImageScalingSize = new Size(20, 20);
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonSettings, toolStripButtonBuild });
-            toolStrip1.Location = new Point(0, 0);
+            toolStrip1.Location = new Point(0, 28);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 27);
             toolStrip1.TabIndex = 2;
@@ -81,18 +86,53 @@
             toolStripButtonBuild.ToolTipText = "Build";
             toolStripButtonBuild.Click += toolStripButtonBuild_Click;
             // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { updateToolStripMenuItem, rebuildReferencesToolStripMenuItem, transliterationToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(800, 28);
+            menuStrip1.TabIndex = 3;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // updateToolStripMenuItem
+            // 
+            updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            updateToolStripMenuItem.Size = new Size(72, 24);
+            updateToolStripMenuItem.Text = "Update";
+            updateToolStripMenuItem.Click += updateToolStripMenuItem_Click;
+            // 
+            // rebuildReferencesToolStripMenuItem
+            // 
+            rebuildReferencesToolStripMenuItem.Name = "rebuildReferencesToolStripMenuItem";
+            rebuildReferencesToolStripMenuItem.Size = new Size(150, 24);
+            rebuildReferencesToolStripMenuItem.Text = "Rebuild References";
+            rebuildReferencesToolStripMenuItem.Click += rebuildReferencesToolStripMenuItem_Click;
+            // 
+            // transliterationToolStripMenuItem
+            // 
+            transliterationToolStripMenuItem.Name = "transliterationToolStripMenuItem";
+            transliterationToolStripMenuItem.Size = new Size(117, 24);
+            transliterationToolStripMenuItem.Text = "Transliteration";
+            transliterationToolStripMenuItem.Click += transliterationToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(toolStrip1);
             Controls.Add(traceBox);
+            Controls.Add(toolStrip1);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "MainForm";
-            Text = "Form1";
+            Text = "Populate Strongs Dictionary";
             Load += MainForm_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -103,5 +143,9 @@
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButtonSettings;
         private ToolStripButton toolStripButtonBuild;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem updateToolStripMenuItem;
+        private ToolStripMenuItem rebuildReferencesToolStripMenuItem;
+        private ToolStripMenuItem transliterationToolStripMenuItem;
     }
 }

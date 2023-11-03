@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
@@ -10,14 +11,25 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PopulateStrongsDictionary
 {
-    internal class DictionarySpreadSheets
+    internal class DictionarySpreadSheets : TableBase
     {
         private MainForm mainForm;
-        public DictionarySpreadSheets(MainForm mf)
+        public DictionarySpreadSheets(MainForm mf) : base(mf)
         {
             mainForm = mf;
         }
 
+        internal bool ClearTables(NpgsqlDataSource dataSource)
+        {
+            bool result = false;
+            result = ClearTable("dictionary_translation", dataSource);
+            if (result)
+            {
+                result = this.ClearTable("strongs_numbers", dataSource);
+            }
+
+            return result;
+        }
 
         public void LoadSourceSpreadsheetsIntoDB(string sourceSpreadsheetsFolder, NpgsqlDataSource dataSource)
         {
@@ -26,24 +38,6 @@ namespace PopulateStrongsDictionary
                 var command = dataSource.CreateCommand();
 
                 string tableName = "strongs_numbers";
-
-                bool exists = false;
-                command.CommandText = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '" + tableName + "') AS table_existence;";
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (bool)reader[0];
-                }
-                reader.Close();
-
-                if (!exists)
-                {
-                    mainForm.Trace("Table '" + tableName + "' does not exist!", Color.Red);
-                    return;
-                }
-
-                command.CommandText = "DELETE FROM public.\"" + tableName + "\";";
-                command.ExecuteNonQuery();
 
                 Excel.Application xlApp = new Excel.Application();
 
@@ -63,7 +57,7 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("LoadSpreadsheetsIntoDB Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return;
             }
 
@@ -182,7 +176,7 @@ namespace PopulateStrongsDictionary
 
                 result = false;
                 mainForm.Trace(cmdText, Color.Red);
-                mainForm.Trace(ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
             }
 
             return result;
@@ -196,20 +190,6 @@ namespace PopulateStrongsDictionary
 
                 string tableName = "dictionary_translation";
 
-                bool exists = false;
-                command.CommandText = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '" + tableName + "') AS table_existence;";
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (bool)reader[0];
-                }
-                reader.Close();
-
-                if (!exists)
-                {
-                    mainForm.Trace("Table '" + tableName + "' does not exist!", Color.Red);
-                    return;
-                }
 
                 Excel.Application xlApp = new Excel.Application();
 
@@ -228,7 +208,7 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("LoadSpreadsheetsIntoDB Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return;
             }
 
@@ -347,8 +327,8 @@ namespace PopulateStrongsDictionary
                            strongsNumber.Replace("'", "''"),
                            dStrong.Replace("'", "''"),
                            englishWord.Replace("'", "''"),
-                           longText.Replace("'", "''"),
-                           shortText.Replace("'", "''")
+                           Arabic.AdjustText(longText),
+                           Arabic.AdjustText(shortText)
                            );
 
                     int d = 0;
@@ -374,7 +354,7 @@ namespace PopulateStrongsDictionary
 
                 result = false;
                 mainForm.Trace(cmdText, Color.Red);
-                mainForm.Trace(ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
             }
             return result;
         }

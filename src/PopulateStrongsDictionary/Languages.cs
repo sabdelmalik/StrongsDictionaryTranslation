@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PopulateStrongsDictionary
 {
-    public class Languages
+    internal class Languages : TableBase
     {
         private Dictionary<int, Language> languagesDict = new Dictionary<int, Language>();
 
@@ -19,7 +20,7 @@ namespace PopulateStrongsDictionary
         };   
 
         private MainForm mainForm;
-        public Languages(MainForm mainForm)
+        public Languages(MainForm mainForm) : base(mainForm)
         {
             this.mainForm = mainForm;
 
@@ -221,6 +222,15 @@ namespace PopulateStrongsDictionary
             return languagesDict[langid];
         }
 
+        internal bool ClearTables(NpgsqlDataSource dataSource)
+        {
+            bool result = false;
+            result = ClearTable("language", dataSource);
+ 
+            return result;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -233,30 +243,13 @@ namespace PopulateStrongsDictionary
             try
             {
                 var command = dataSource.CreateCommand();
-
-                bool exists = false;
-                command.CommandText = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'language') AS table_existence;";
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (bool)reader[0];
-                }
-                reader.Close();
-
-                if (!exists)
-                {
-                    mainForm.Trace("Table 'language' does not exist!", Color.Red);
-                    return;
-                }
-
-                command.CommandText = "DELETE FROM public.\"language\";";
-                command.ExecuteNonQuery();
+                string tableName = "language";
 
                 foreach (int langId in languagesDict.Keys)
                 {
                     Language lang = languagesDict[langId];
 
-                    cmdText = "INSERT INTO public.\"language\" " +
+                    cmdText = "INSERT INTO public.\"" + tableName + "\" " +
                        "(id, name, iso_639_1, iso_639_2) " +
                        "VALUES " +
                        string.Format("({0}, '{1}', '{2}', '{3}');",
@@ -274,11 +267,12 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("PopulateBookNames Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return;
             }
 
         }
+
     }
 
     public class Language

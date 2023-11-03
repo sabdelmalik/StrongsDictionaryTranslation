@@ -16,7 +16,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace PopulateStrongsDictionary
 {
-    internal class AraSVD
+    internal class AraSVD : TableBase
     {
 
         /// <summary>
@@ -53,9 +53,21 @@ namespace PopulateStrongsDictionary
 
         MainForm mainForm;
 
-        public AraSVD(MainForm mainForm)
+        public AraSVD(MainForm mainForm) : base(mainForm)
         {
             this.mainForm = mainForm;
+        }
+
+        public bool ClearTables(NpgsqlDataSource dataSource)
+        {
+            bool result = false;
+            result = ClearTable("bible_text", dataSource);
+            if (result)
+            {
+                result = ClearTable("bible_words_references", dataSource);
+            }
+
+            return result;
         }
 
         public bool LoadBibleVerses(int langId, NpgsqlDataSource dataSource)
@@ -68,24 +80,6 @@ namespace PopulateStrongsDictionary
                 mainForm.Trace("\r\nPolpulating Bible text!", Color.Green);
 
                 using var command = dataSource.CreateCommand();
-
-                bool exists = false;
-                command.CommandText = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '" + table + "') AS table_existence;";
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (bool)reader[0];
-                }
-                reader.Close();
-
-                if (!exists)
-                {
-                    mainForm.Trace("Table '" + table + "' does not exist!", Color.Red);
-                    return false;
-                }
-
-                command.CommandText = "DELETE FROM public.\"" + table + "\";";
-                command.ExecuteNonQuery();
 
                 string[] references = bible.Keys.ToArray();
                 for (int i = 0; i < bible.Count; i++)
@@ -117,7 +111,7 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("LoadBibleVerses Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return false;
             }
 
@@ -135,21 +129,6 @@ namespace PopulateStrongsDictionary
 
                 using var command = dataSource.CreateCommand();
 
-                bool exists = false;
-                command.CommandText = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '" + table + "') AS table_existence;";
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (bool)reader[0];
-                }
-                reader.Close();
-
-                if (!exists)
-                {
-                    mainForm.Trace("Table '" + table + "' does not exist!", Color.Red);
-                    return false;
-                }
-
                 command.CommandText = "DELETE FROM public.\"" + table + "\";";
                 command.ExecuteNonQuery();
 
@@ -160,41 +139,42 @@ namespace PopulateStrongsDictionary
                     if (strongs[i] == "H0000" || strongs[i] == "G0000")
                         continue;
 
+                    if(strongs[i] == "H1057")
+                    {
+                        int x = 0;
+                    }
                     ArabicReferences ar = Strongs2Arabic[strongs[i]];
 
                     bool first = true;
                     wordList.Clear();
+
+
                     foreach (string araWord in ar.AR.Keys)
                     {
                         #region remove punctuation characters
                         string cleanWord = araWord;
 
-                        string temp = cleanWord.
-                            Replace("،", "").Replace(":", "").
-                            Replace("!", "").Replace(",", "").
-                            Replace("«", "").Replace("»", "").
-                            Replace("؟", "").Replace(".", "");
-                        if (temp.Length > 0)
-                            cleanWord = temp;
+                        //string temp = cleanWord.
+                        //    Replace("،", "").Replace(":", "").
+                        //    Replace("!", "").Replace(",", "").
+                        //    Replace("«", "").Replace("»", "").
+                        //    Replace("؟", "").Replace(".", "");
+                        //if (temp.Length > 0)
+                        //    cleanWord = temp;
 
                         #endregion remove punctuation characters
 
                         #region remove unnecessary Arabic words
-                        if (cleanWord.Length > 6) cleanWord = cleanWord.
-                                Replace("كنت ", "").
-                                Replace("كانوا ", "");
-                        if (cleanWord.Length > 5) cleanWord = cleanWord.
-                                Replace("قد ", "").
-                                Replace("قد ", "").
-                                Replace("في ", "").
-                                Replace("كانت ", "").
-                                Replace("كان ", "");
+                        //if (cleanWord.Length > 6) cleanWord = cleanWord.
+                        //        Replace("كنت ", "").
+                        //        Replace("كانوا ", "");
+                        //if (cleanWord.Length > 5) cleanWord = cleanWord.
+                        //        Replace("قد ", "").
+                        //        Replace("قد ", "").
+                        //        Replace("في ", "").
+                        //        Replace("كانت ", "").
+                        //        Replace("كان ", "");
                         #endregion remove unnecessary Arabic words
-
-                        if (wordList.Contains(cleanWord))
-                            continue;
-
-                        wordList.Add(cleanWord);
 
                         string refrs = string.Empty;
                         foreach (string r in ar.AR[araWord])
@@ -202,6 +182,12 @@ namespace PopulateStrongsDictionary
                             refrs = refrs + r + ", ";
                         }
                         refrs = refrs.Substring(0, refrs.Length - 2);
+
+                        if (wordList.Contains(cleanWord))
+                            continue;
+
+                        wordList.Add(cleanWord);
+
                         if (strongs[i].Length > 5)
                         {
                             int x = 0;
@@ -224,7 +210,7 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("LoadBibleWords Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return false;
             }
 
@@ -368,7 +354,7 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("LoadBibleToDB Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return;
             }
         }
@@ -397,7 +383,7 @@ namespace PopulateStrongsDictionary
                 catch (Exception ex)
                 {
                     //Tracing.TraceException(MethodBase.GetCurrentMethod().Name, ex.Message);
-                    mainForm.Trace(string.Format("[{0}]: {1}", MethodBase.GetCurrentMethod().Name, ex.Message), Color.Red);
+                    mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.Message);
 
                 }
                 return bookName;
@@ -578,6 +564,7 @@ namespace PopulateStrongsDictionary
             currentVerseCount++;
 
         }
+
     }
 
     internal class ArabicReferences

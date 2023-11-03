@@ -10,13 +10,37 @@ using System.Windows.Forms;
 
 namespace PopulateStrongsDictionary
 {
+    public enum DictionaryType
+    {
+        SPREADSHEETS,
+        TAB_SEPARATED_TEXT
+    }
+
     public partial class ConfigurationDialog : Form
     {
         public ConfigurationDialog()
         {
             InitializeComponent();
+            rbtnSpreadsheets.Checked = true;
         }
 
+        private void ConfigurationDialog_Load(object sender, EventArgs e)
+        {
+           
+        }
+
+        public DictionaryType DictionaryToUse
+        {
+            get
+            {
+                return rbtnSpreadsheets.Checked ? DictionaryType.SPREADSHEETS : DictionaryType.TAB_SEPARATED_TEXT;
+            }
+            set
+            {
+                rbtnSpreadsheets.Checked = (value == DictionaryType.SPREADSHEETS);
+                rbtnTabSeparatedText.Checked = (value == DictionaryType.TAB_SEPARATED_TEXT);
+            }
+        }
         public string SourceSpreadsheetsFolder
         {
             get
@@ -29,7 +53,7 @@ namespace PopulateStrongsDictionary
             }
         }
 
-        public string SourceTranslatedSpreadsheetsFolder
+        public string TranslatedSpreadsheetsFolder
         {
             get
             {
@@ -38,6 +62,30 @@ namespace PopulateStrongsDictionary
             set
             {
                 tbTranslatedSpreadsheets.Text = value;
+            }
+        }
+
+        public string SourceTabSeparatedText
+        {
+            get
+            {
+                return tbSourceTabSeparatedText.Text;
+            }
+            set
+            {
+                tbSourceTabSeparatedText.Text = value;
+            }
+        }
+
+        public string TranslatedTabSeparatedText
+        {
+            get
+            {
+                return tbTranslatedTabSeparatedText.Text;
+            }
+            set
+            {
+                tbTranslatedTabSeparatedText.Text = value;
             }
         }
 
@@ -58,7 +106,7 @@ namespace PopulateStrongsDictionary
             get
             {
                 int i = this.comboBoxLanguage.SelectedIndex;
-                if(i == -1)
+                if (i == -1)
                 {
                     return 0;
                 }
@@ -93,6 +141,16 @@ namespace PopulateStrongsDictionary
         private void btnTranslatedSpreadsheets_Click(object sender, EventArgs e)
         {
             GetFolder("Select Translated Spreadsheets Folder", this.tbTranslatedSpreadsheets);
+        }
+
+        private void btnSourceTabSeparatedText_Click(object sender, EventArgs e)
+        {
+            GetFile("Select Source Text File", this.tbSourceTabSeparatedText);
+        }
+
+        private void btnTranslatedTabSeparatedText_Click(object sender, EventArgs e)
+        {
+            GetFile("Select Translated Text File", this.tbTranslatedTabSeparatedText);
         }
 
         private void btnTaggedBible_Click(object sender, EventArgs e)
@@ -135,5 +193,44 @@ namespace PopulateStrongsDictionary
             }
 
         }
+
+        private void rbtnTabSeparatedText_CheckedChanged(object sender, EventArgs e)
+        {
+            SetDictionaryType();
+        }
+
+        private void rbtnSpreadsheets_CheckedChanged(object sender, EventArgs e)
+        {
+            SetDictionaryType();
+        }
+
+        private void SetDictionaryType()
+        {
+            if (rbtnSpreadsheets.Checked)
+            {
+                tbSourceSpreadsheets.Enabled = true;
+                tbTranslatedSpreadsheets.Enabled = true;
+                btnSourceSpreadsheets.Enabled = true;
+                btnTranslatedSpreadsheets.Enabled = true;
+
+                tbSourceTabSeparatedText.Enabled = false;
+                tbTranslatedTabSeparatedText.Enabled = false;
+                btnSourceTabSeparatedText.Enabled = false;
+                btnTranslatedTabSeparatedText.Enabled = false;
+            }
+            else
+            {
+                tbSourceSpreadsheets.Enabled = false;
+                tbTranslatedSpreadsheets.Enabled = false;
+                btnSourceSpreadsheets.Enabled = false;
+                btnTranslatedSpreadsheets.Enabled = false;
+
+                tbSourceTabSeparatedText.Enabled = true;
+                tbTranslatedTabSeparatedText.Enabled = true;
+                btnSourceTabSeparatedText.Enabled = true;
+                btnTranslatedTabSeparatedText.Enabled = true;
+            }
+        }
+
     }
 }

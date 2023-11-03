@@ -6,17 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml;
+using System.Reflection;
 
 namespace PopulateStrongsDictionary
 {
-    internal class BibleBooks
+    internal class BibleBooks:TableBase
     {
         MainForm mainForm;
 
-        public BibleBooks(MainForm mainForm)
+        public BibleBooks(MainForm mainForm) : base(mainForm)
         {
             this.mainForm = mainForm;
         }
+        internal bool ClearTables(NpgsqlDataSource dataSource)
+        {
+            bool result = false;
+            result = ClearTable("book", dataSource);
+            return result;
+        }
+
         public void PopulateBookNames(NpgsqlDataSource dataSource)
         {
             string cmdText = string.Empty;
@@ -25,30 +33,13 @@ namespace PopulateStrongsDictionary
             try
             {
                 var command = dataSource.CreateCommand();
-
-                bool exists = false;
-                command.CommandText = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'book') AS table_existence;";
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (bool)reader[0];
-                }
-                reader.Close();
-
-                if (!exists)
-                {
-                    mainForm.Trace("Table 'book' does not exist!", Color.Red);
-                    return;
-                }
-
-                command.CommandText = "DELETE FROM public.\"book\";";
-                command.ExecuteNonQuery();
+                string tableName = "book";
 
                 int index = 0;
                 for(int i = 0; i < usfmNames.Length; i++)
                 {
 
-                    cmdText = "INSERT INTO public.\"book\" " +
+                    cmdText = "INSERT INTO public.\"" + tableName + "\" " +
                        "(id, usfm_name, osis_name, full_name) " +
                        "VALUES " +
                        string.Format("({0}, '{1}', '{2}', '{3}');",
@@ -64,7 +55,7 @@ namespace PopulateStrongsDictionary
             }
             catch (Exception ex)
             {
-                mainForm.Trace("PopulateBookNames Exception\r\n" + ex.ToString(), Color.Red);
+                mainForm.TraceError(MethodBase.GetCurrentMethod().Name, ex.ToString());
                 return;
             }
 

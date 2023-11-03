@@ -55,4 +55,8 @@
     <PackageReference Include="Npgsql" Version="7.0.4" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /i /e /s /y /f $(ProjectDir)STEP $(TargetDir)STEP" />
+  </Target>
+
 </Project>
