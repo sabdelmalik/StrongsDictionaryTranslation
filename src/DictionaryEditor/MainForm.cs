@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Web;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Diagnostics.Eventing.Reader;
 
 namespace DictionaryEditor
 {
@@ -37,6 +38,9 @@ namespace DictionaryEditor
         private int returnLang = 0;
         string returnStrong = string.Empty;
         string returnDStrong = string.Empty;
+
+        int lastH = 9049;
+        int lastG = 9996;
 
         /// <summary>
         /// key strong's number
@@ -66,6 +70,20 @@ namespace DictionaryEditor
         delegate void TraceDelegate(string text, Color color);
         delegate void ClearTraceDelegate();
         delegate void SetTraceRTLDelegate(bool rtl);
+
+        private void Trace(string text, System.Drawing.Color color,
+        [CallerLineNumber] int lineNumber = 0,
+        [CallerMemberName] string caller = null)
+        {
+            Trace(text, color);
+        }
+        private void TraceError(
+                string text,
+                [CallerLineNumber] int lineNumber = 0,
+                [CallerMemberName] string caller = null)
+        {
+            TraceError(string.Format("{0}#{1}", caller == null ? "???" : caller, lineNumber), text);
+        }
 
         public void clearTrace()
         {
@@ -465,14 +483,40 @@ namespace DictionaryEditor
         {
             if (e.KeyData == Keys.Enter)
             {
-                List<char> chars;
+                List<char>? chars = null;
                 int current = int.Parse(strongsNumberControl.Text);
-                if (cbLanguage.SelectedIndex == 1) chars = greekStrongs[current];
-                else chars = hebrewStrongs[current];
-                if (chars.Count > 0)
+                if (cbLanguage.SelectedIndex == 1)
+                {
+                    if (greekStrongs.ContainsKey(current))
+                        chars = greekStrongs[current];
+                    else
+                    {
+
+                        MoveToNewStrongNumber(current > 0);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (hebrewStrongs.ContainsKey(current))
+                        chars = hebrewStrongs[current];
+                    else
+                    {
+                        MoveToNewStrongNumber(current > 0);
+                        return;
+                    }
+                }
+
+                if (chars != null && chars.Count > 0)
+                {
                     tbDstrongs.Text = chars[0].ToString();
-                pbUP.Focus(); // move focus away from strongsNumberControl
-                HandleStrongChanged();
+                    pbUP.Focus(); // move focus away from strongsNumberControl
+                    HandleStrongChanged();
+                }
+                else
+                {
+                    TraceError("Strong's number not found;");
+                }
 
                 //SM FetchStrongs();
             }
@@ -503,11 +547,30 @@ namespace DictionaryEditor
 
         private void ChangeStrongs(bool next)
         {
-            List<char> chars;
+            List<char> chars = null;
             int current = int.Parse(strongsNumberControl.Text);
-            if (cbLanguage.SelectedIndex == 1) chars = greekStrongs[current];
-            else chars = hebrewStrongs[current];
-            if (chars.Count < 2)
+            if (cbLanguage.SelectedIndex == 1)
+            {
+                if (greekStrongs.ContainsKey(current))
+                    chars = greekStrongs[current];
+                else
+                {
+                    MoveToNewStrongNumber(next);
+                    return;
+                }
+            }
+            else
+            {
+                if (hebrewStrongs.ContainsKey(current))
+                    chars = hebrewStrongs[current];
+                else
+                {
+                    MoveToNewStrongNumber(next);
+                    return;
+                }
+            }
+
+            if (chars != null && chars.Count < 2)
             {
                 MoveToNewStrongNumber(next);
             }
@@ -551,8 +614,46 @@ namespace DictionaryEditor
             else strongsNumberControl.Decrement();
 
             int current = int.Parse(strongsNumberControl.Text);
-            if (cbLanguage.SelectedIndex == 1) chars = greekStrongs[current];
-            else chars = hebrewStrongs[current];
+            if (cbLanguage.SelectedIndex == 1)
+            {
+                while (!greekStrongs.ContainsKey(current))
+                {
+                    if (next)
+                    {
+                        strongsNumberControl.Increment();
+                        if (current > lastG)
+                            strongsNumberControl.Text = "0001";
+                    }
+                    else
+                    {
+                        strongsNumberControl.Decrement();
+                        if (current < 1)
+                            strongsNumberControl.Text = lastG.ToString();
+                    }
+                    current = int.Parse(strongsNumberControl.Text);
+                }
+                chars = greekStrongs[current];
+            }
+            else
+            {
+                while (!hebrewStrongs.ContainsKey(current))
+                {
+                    if (next)
+                    {
+                        strongsNumberControl.Increment();
+                        if (current > lastH)
+                            strongsNumberControl.Text = "0001";
+                    }
+                    else
+                    {
+                        strongsNumberControl.Decrement();
+                         if (current < 1)
+                            strongsNumberControl.Text = lastH.ToString();
+                   }
+                   current = int.Parse(strongsNumberControl.Text);
+                }
+                chars = hebrewStrongs[current];
+            }
             if (chars.Count > 0)
             {
                 if (next) tbDstrongs.Text = chars[0].ToString();
@@ -1183,55 +1284,55 @@ namespace DictionaryEditor
 
                 var command = dataSource.CreateCommand();
 
-                string tableName = "updated_translation";
+                //string tableName = "updated_translation";
 
-                bool exists = false;
-                command.CommandText = string.Format("SELECT id from public.\"{0}\" WHERE strongs_number='{1}' AND d_strong='{2}';",
-                    tableName,
-                    strongsNumber,
-                    dStrong);
+                //bool exists = false;
+                //command.CommandText = string.Format("SELECT id from public.\"{0}\" WHERE strongs_number='{1}' AND d_strong='{2}';",
+                //    tableName,
+                //    strongsNumber,
+                //    dStrong);
 
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    exists = (long)reader[0] > 0;
-                }
-                reader.Close();
+                //NpgsqlDataReader reader = command.ExecuteReader();
+                //while (reader.Read())
+                //{
+                //    exists = (long)reader[0] > 0;
+                //}
+                //reader.Close();
 
-                if (exists)
-                {
+                //if (exists)
+                //{
 
-                    cmdText = "UPDATE public.\"" + tableName + "\" " +
-                        string.Format("SET translated_word='{0}', translated_text='{1}', reviewer_initials='{2}' ",
-                        tbTranslatedWord.Text.Replace("'", "''"),
-                        tbTranslatedLong.Text.Replace("'", "''"),
-                        Environment.UserName) +
-                        string.Format("WHERE strongs_number='{0}' AND d_strong='{1}' AND language_id={2};",
-                        strongsNumber, dStrong, targetLanguage);
+                //    cmdText = "UPDATE public.\"" + tableName + "\" " +
+                //        string.Format("SET translated_word='{0}', translated_text='{1}', reviewer_initials='{2}' ",
+                //        tbTranslatedWord.Text.Replace("'", "''"),
+                //        tbTranslatedLong.Text.Replace("'", "''"),
+                //        Environment.UserName) +
+                //        string.Format("WHERE strongs_number='{0}' AND d_strong='{1}' AND language_id={2};",
+                //        strongsNumber, dStrong, targetLanguage);
 
-                    command.CommandText = cmdText;
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    cmdText = "INSERT INTO public.\"" + tableName + "\" " +
-                   "(language_id, strongs_number, d_strong, translated_word, translated_text, reviewer_initials) " +
-                       "VALUES " +
-                       string.Format("({0}, '{1}', '{2}', '{3}', '{4}', '{5}');",
-                       targetLanguage,
-                       strongsNumber,
-                       dStrong,
-                       tbTranslatedWord.Text.Replace("'", "''"),
-                       tbTranslatedLong.Text.Replace("'", "''"),
-                       Environment.UserName);
+                //    command.CommandText = cmdText;
+                //    command.ExecuteNonQuery();
+                //}
+                //else
+                //{
+                //    cmdText = "INSERT INTO public.\"" + tableName + "\" " +
+                //   "(language_id, strongs_number, d_strong, translated_word, translated_text, reviewer_initials) " +
+                //       "VALUES " +
+                //       string.Format("({0}, '{1}', '{2}', '{3}', '{4}', '{5}');",
+                //       targetLanguage,
+                //       strongsNumber,
+                //       dStrong,
+                //       tbTranslatedWord.Text.Replace("'", "''"),
+                //       tbTranslatedLong.Text.Replace("'", "''"),
+                //       Environment.UserName);
 
-                    command.CommandText = cmdText;
-                    command.ExecuteNonQuery();
+                //    command.CommandText = cmdText;
+                //    command.ExecuteNonQuery();
 
-                }
+                //}
 
 
-                tableName = "dictionary_translation";
+                string tableName = "dictionary_translation";
                 cmdText = "UPDATE public.\"" + tableName + "\" " +
                         string.Format("SET translated_word='{0}', translated_long_text='{1}' ",
                         tbTranslatedWord.Text.Replace("'", "''"),
