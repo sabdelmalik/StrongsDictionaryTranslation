@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+database/Version2/BU/
+src/DictionaryEditorV2/DictionaryEditorV2/PrivateData/PostgresqlConfig.json
+src/DictionaryEditorV2/DictionaryEditorV2/PrivateData/civic-genius-405917-75f68833ff58.json
+src/DictionaryEditorV2/DictionaryEditorV2/PrivateData/mydrivetest1-f21ef9ea31a8.json

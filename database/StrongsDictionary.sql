@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS public."bible_text";
 DROP TABLE IF EXISTS public."dictionary_translation";
 DROP TABLE IF EXISTS public."language";
 DROP TABLE IF EXISTS public."strongs_references";
+DROP TABLE IF EXISTS public.google_sheet;
+DROP TABLE IF EXISTS public.sheets_updates;
 
 CREATE TABLE IF NOT EXISTS public.bible_text
 (
@@ -109,6 +111,26 @@ CREATE TABLE IF NOT EXISTS public.updated_translation
     approved boolean DEFAULT FALSE,
     approver_initials character varying(32),
     PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.google_sheet
+(
+    id character varying(128) NOT NULL,
+    name character varying(64),
+    last_updated timestamp without time zone NOT NULL,
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE IF NOT EXISTS public.sheets_updates
+(
+    translation_id bigint,
+    sheet_id character varying(128),
+    update_date timestamp without time zone,
+    updater_name character varying(128),
+    updater_email character varying(128),
+    status integer,
+    translated_text text
 );
 
 ALTER TABLE IF EXISTS public.bible_text
