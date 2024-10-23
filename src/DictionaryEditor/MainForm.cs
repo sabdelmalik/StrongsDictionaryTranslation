@@ -957,7 +957,7 @@ namespace DictionaryEditor
                 command.CommandText =
                    "SELECT  " +
                    "strongs_number,d_strong " +
-                   "FROM public.\"strongs_numbers\";";
+                   "FROM public.\"strongs_numbers\" ORDER BY strongs_number ASC,d_strong ASC;";
 
                 NpgsqlDataReader reader = command.ExecuteReader();
 

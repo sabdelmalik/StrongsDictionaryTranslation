@@ -109,19 +109,20 @@
             // 
             traceBox.Dock = DockStyle.Fill;
             traceBox.Location = new Point(0, 0);
+            traceBox.Margin = new Padding(4, 4, 4, 4);
             traceBox.Name = "traceBox";
             traceBox.RightToLeft = RightToLeft.Yes;
-            traceBox.Size = new Size(709, 273);
+            traceBox.Size = new Size(887, 343);
             traceBox.TabIndex = 1;
             traceBox.Text = "";
             // 
             // strongsNumberControl
             // 
             strongsNumberControl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            strongsNumberControl.Location = new Point(123, 36);
-            strongsNumberControl.Margin = new Padding(3, 4, 3, 4);
+            strongsNumberControl.Location = new Point(154, 45);
+            strongsNumberControl.Margin = new Padding(4, 5, 4, 5);
             strongsNumberControl.Name = "strongsNumberControl";
-            strongsNumberControl.Size = new Size(71, 34);
+            strongsNumberControl.Size = new Size(88, 39);
             strongsNumberControl.TabIndex = 3;
             strongsNumberControl.Text = "0001";
             strongsNumberControl.TextAlign = HorizontalAlignment.Center;
@@ -129,10 +130,10 @@
             // pbUP
             // 
             pbUP.Image = (Image)resources.GetObject("pbUP.Image");
-            pbUP.Location = new Point(249, 36);
-            pbUP.Margin = new Padding(3, 4, 3, 4);
+            pbUP.Location = new Point(311, 45);
+            pbUP.Margin = new Padding(4, 5, 4, 5);
             pbUP.Name = "pbUP";
-            pbUP.Size = new Size(35, 13);
+            pbUP.Size = new Size(44, 16);
             pbUP.SizeMode = PictureBoxSizeMode.StretchImage;
             pbUP.TabIndex = 6;
             pbUP.TabStop = false;
@@ -141,10 +142,10 @@
             // pbDown
             // 
             pbDown.Image = (Image)resources.GetObject("pbDown.Image");
-            pbDown.Location = new Point(248, 53);
-            pbDown.Margin = new Padding(3, 4, 3, 4);
+            pbDown.Location = new Point(310, 66);
+            pbDown.Margin = new Padding(4, 5, 4, 5);
             pbDown.Name = "pbDown";
-            pbDown.Size = new Size(35, 13);
+            pbDown.Size = new Size(44, 16);
             pbDown.SizeMode = PictureBoxSizeMode.StretchImage;
             pbDown.TabIndex = 0;
             pbDown.TabStop = false;
@@ -156,11 +157,11 @@
             cbLanguage.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             cbLanguage.FormattingEnabled = true;
             cbLanguage.Items.AddRange(new object[] { "Hebrew", "Greek" });
-            cbLanguage.Location = new Point(3, 36);
-            cbLanguage.Margin = new Padding(3, 4, 3, 4);
+            cbLanguage.Location = new Point(4, 45);
+            cbLanguage.Margin = new Padding(4, 5, 4, 5);
             cbLanguage.MaxDropDownItems = 2;
             cbLanguage.Name = "cbLanguage";
-            cbLanguage.Size = new Size(114, 36);
+            cbLanguage.Size = new Size(142, 40);
             cbLanguage.TabIndex = 7;
             cbLanguage.SelectedIndexChanged += cbLanguage_SelectedIndexChanged;
             // 
@@ -169,8 +170,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             label1.Location = new Point(0, 0);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(208, 32);
+            label1.Size = new Size(252, 40);
             label1.TabIndex = 8;
             label1.Text = "Strong's Number";
             // 
@@ -178,34 +180,34 @@
             // 
             tbOriginal.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             tbOriginal.ForeColor = Color.Blue;
-            tbOriginal.Location = new Point(300, 32);
-            tbOriginal.Margin = new Padding(3, 4, 3, 4);
+            tbOriginal.Location = new Point(375, 40);
+            tbOriginal.Margin = new Padding(4, 5, 4, 5);
             tbOriginal.Name = "tbOriginal";
             tbOriginal.ReadOnly = true;
-            tbOriginal.Size = new Size(188, 34);
+            tbOriginal.Size = new Size(234, 39);
             tbOriginal.TabIndex = 9;
             // 
             // tbEnglish
             // 
             tbEnglish.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             tbEnglish.ForeColor = Color.Blue;
-            tbEnglish.Location = new Point(494, 32);
-            tbEnglish.Margin = new Padding(3, 4, 3, 4);
+            tbEnglish.Location = new Point(618, 40);
+            tbEnglish.Margin = new Padding(4, 5, 4, 5);
             tbEnglish.Name = "tbEnglish";
             tbEnglish.ReadOnly = true;
-            tbEnglish.Size = new Size(181, 34);
+            tbEnglish.Size = new Size(225, 39);
             tbEnglish.TabIndex = 9;
             // 
             // tbShortText
             // 
             tbShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            tbShortText.Location = new Point(774, 804);
-            tbShortText.Margin = new Padding(3, 4, 3, 4);
+            tbShortText.Location = new Point(968, 1005);
+            tbShortText.Margin = new Padding(4, 5, 4, 5);
             tbShortText.Multiline = true;
             tbShortText.Name = "tbShortText";
             tbShortText.ReadOnly = true;
             tbShortText.ScrollBars = ScrollBars.Vertical;
-            tbShortText.Size = new Size(296, 72);
+            tbShortText.Size = new Size(369, 89);
             tbShortText.TabIndex = 10;
             tbShortText.Visible = false;
             // 
@@ -216,12 +218,12 @@
             tbLongText.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             tbLongText.ForeColor = Color.Blue;
             tbLongText.Location = new Point(0, 0);
-            tbLongText.Margin = new Padding(3, 4, 3, 4);
+            tbLongText.Margin = new Padding(4, 5, 4, 5);
             tbLongText.Multiline = true;
             tbLongText.Name = "tbLongText";
             tbLongText.ReadOnly = true;
             tbLongText.ScrollBars = ScrollBars.Vertical;
-            tbLongText.Size = new Size(930, 329);
+            tbLongText.Size = new Size(1162, 412);
             tbLongText.TabIndex = 10;
             // 
             // contextMenuStrip1
@@ -234,13 +236,13 @@
             // tbTranslatedShort
             // 
             tbTranslatedShort.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            tbTranslatedShort.Location = new Point(491, 804);
-            tbTranslatedShort.Margin = new Padding(3, 4, 3, 4);
+            tbTranslatedShort.Location = new Point(614, 1005);
+            tbTranslatedShort.Margin = new Padding(4, 5, 4, 5);
             tbTranslatedShort.Multiline = true;
             tbTranslatedShort.Name = "tbTranslatedShort";
             tbTranslatedShort.RightToLeft = RightToLeft.Yes;
             tbTranslatedShort.ScrollBars = ScrollBars.Vertical;
-            tbTranslatedShort.Size = new Size(254, 72);
+            tbTranslatedShort.Size = new Size(316, 89);
             tbTranslatedShort.TabIndex = 10;
             tbTranslatedShort.Visible = false;
             // 
@@ -249,11 +251,11 @@
             tbTranslatedWord.Dock = DockStyle.Right;
             tbTranslatedWord.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             tbTranslatedWord.ForeColor = Color.Black;
-            tbTranslatedWord.Location = new Point(715, 0);
-            tbTranslatedWord.Margin = new Padding(3, 4, 3, 4);
+            tbTranslatedWord.Location = new Point(894, 0);
+            tbTranslatedWord.Margin = new Padding(4, 5, 4, 5);
             tbTranslatedWord.Name = "tbTranslatedWord";
             tbTranslatedWord.RightToLeft = RightToLeft.Yes;
-            tbTranslatedWord.Size = new Size(215, 34);
+            tbTranslatedWord.Size = new Size(268, 39);
             tbTranslatedWord.TabIndex = 9;
             // 
             // dgvWords
@@ -272,12 +274,13 @@
             dgvWords.DefaultCellStyle = dataGridViewCellStyle1;
             dgvWords.Dock = DockStyle.Fill;
             dgvWords.Location = new Point(0, 0);
+            dgvWords.Margin = new Padding(4, 4, 4, 4);
             dgvWords.Name = "dgvWords";
             dgvWords.ReadOnly = true;
             dgvWords.RightToLeft = RightToLeft.Yes;
             dgvWords.RowHeadersWidth = 51;
             dgvWords.RowTemplate.Height = 29;
-            dgvWords.Size = new Size(709, 363);
+            dgvWords.Size = new Size(887, 454);
             dgvWords.TabIndex = 13;
             // 
             // dgvVerses
@@ -295,6 +298,7 @@
             dgvVerses.DefaultCellStyle = dataGridViewCellStyle2;
             dgvVerses.Dock = DockStyle.Fill;
             dgvVerses.Location = new Point(0, 0);
+            dgvVerses.Margin = new Padding(4, 4, 4, 4);
             dgvVerses.Name = "dgvVerses";
             dgvVerses.ReadOnly = true;
             dgvVerses.RightToLeft = RightToLeft.Yes;
@@ -305,21 +309,23 @@
             dgvVerses.RowTemplate.ReadOnly = true;
             dgvVerses.RowTemplate.Resizable = DataGridViewTriState.False;
             dgvVerses.ShowEditingIcon = false;
-            dgvVerses.Size = new Size(709, 275);
+            dgvVerses.Size = new Size(887, 344);
             dgvVerses.TabIndex = 14;
             // 
             // tbDstrongs
             // 
             tbDstrongs.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            tbDstrongs.Location = new Point(200, 35);
+            tbDstrongs.Location = new Point(250, 44);
+            tbDstrongs.Margin = new Padding(4, 4, 4, 4);
             tbDstrongs.Name = "tbDstrongs";
-            tbDstrongs.Size = new Size(33, 34);
+            tbDstrongs.Size = new Size(40, 39);
             tbDstrongs.TabIndex = 15;
             // 
             // mainSplitContainer
             // 
             mainSplitContainer.Dock = DockStyle.Fill;
-            mainSplitContainer.Location = new Point(0, 28);
+            mainSplitContainer.Location = new Point(0, 33);
+            mainSplitContainer.Margin = new Padding(4, 4, 4, 4);
             mainSplitContainer.Name = "mainSplitContainer";
             // 
             // mainSplitContainer.Panel1
@@ -329,14 +335,16 @@
             // mainSplitContainer.Panel2
             // 
             mainSplitContainer.Panel2.Controls.Add(rightSplitContainer);
-            mainSplitContainer.Size = new Size(1643, 919);
-            mainSplitContainer.SplitterDistance = 930;
+            mainSplitContainer.Size = new Size(2054, 1151);
+            mainSplitContainer.SplitterDistance = 1162;
+            mainSplitContainer.SplitterWidth = 5;
             mainSplitContainer.TabIndex = 16;
             // 
             // leftSplitContainer
             // 
             leftSplitContainer.Dock = DockStyle.Fill;
             leftSplitContainer.Location = new Point(0, 0);
+            leftSplitContainer.Margin = new Padding(4, 4, 4, 4);
             leftSplitContainer.Name = "leftSplitContainer";
             leftSplitContainer.Orientation = Orientation.Horizontal;
             // 
@@ -355,14 +363,16 @@
             // leftSplitContainer.Panel2
             // 
             leftSplitContainer.Panel2.Controls.Add(leftBottomSplitContainer);
-            leftSplitContainer.Size = new Size(930, 919);
-            leftSplitContainer.SplitterDistance = 88;
+            leftSplitContainer.Size = new Size(1162, 1151);
+            leftSplitContainer.SplitterDistance = 110;
+            leftSplitContainer.SplitterWidth = 5;
             leftSplitContainer.TabIndex = 0;
             // 
             // leftBottomSplitContainer
             // 
             leftBottomSplitContainer.Dock = DockStyle.Fill;
             leftBottomSplitContainer.Location = new Point(0, 0);
+            leftBottomSplitContainer.Margin = new Padding(4, 4, 4, 4);
             leftBottomSplitContainer.Name = "leftBottomSplitContainer";
             leftBottomSplitContainer.Orientation = Orientation.Horizontal;
             // 
@@ -374,18 +384,20 @@
             // 
             leftBottomSplitContainer.Panel2.Controls.Add(tbTranslatedLong);
             leftBottomSplitContainer.Panel2.Controls.Add(panel1);
-            leftBottomSplitContainer.Size = new Size(930, 827);
-            leftBottomSplitContainer.SplitterDistance = 329;
+            leftBottomSplitContainer.Size = new Size(1162, 1036);
+            leftBottomSplitContainer.SplitterDistance = 412;
+            leftBottomSplitContainer.SplitterWidth = 5;
             leftBottomSplitContainer.TabIndex = 0;
             // 
             // tbTranslatedLong
             // 
             tbTranslatedLong.Dock = DockStyle.Fill;
             tbTranslatedLong.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            tbTranslatedLong.Location = new Point(0, 40);
+            tbTranslatedLong.Location = new Point(0, 50);
+            tbTranslatedLong.Margin = new Padding(4, 4, 4, 4);
             tbTranslatedLong.Name = "tbTranslatedLong";
             tbTranslatedLong.RightToLeft = RightToLeft.Yes;
-            tbTranslatedLong.Size = new Size(930, 454);
+            tbTranslatedLong.Size = new Size(1162, 569);
             tbTranslatedLong.TabIndex = 10;
             tbTranslatedLong.Text = "";
             // 
@@ -401,24 +413,27 @@
             panel1.Controls.Add(btnZspace);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(930, 40);
+            panel1.Size = new Size(1162, 50);
             panel1.TabIndex = 12;
             // 
             // tbArabicTxLt
             // 
             tbArabicTxLt.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            tbArabicTxLt.Location = new Point(480, 1);
+            tbArabicTxLt.Location = new Point(600, 1);
+            tbArabicTxLt.Margin = new Padding(4, 4, 4, 4);
             tbArabicTxLt.Name = "tbArabicTxLt";
             tbArabicTxLt.RightToLeft = RightToLeft.Yes;
-            tbArabicTxLt.Size = new Size(239, 34);
+            tbArabicTxLt.Size = new Size(298, 39);
             tbArabicTxLt.TabIndex = 13;
             // 
             // btnStopSearch
             // 
-            btnStopSearch.Location = new Point(420, 6);
+            btnStopSearch.Location = new Point(525, 8);
+            btnStopSearch.Margin = new Padding(4, 4, 4, 4);
             btnStopSearch.Name = "btnStopSearch";
-            btnStopSearch.Size = new Size(54, 29);
+            btnStopSearch.Size = new Size(68, 36);
             btnStopSearch.TabIndex = 13;
             btnStopSearch.Text = "Stop";
             btnStopSearch.UseVisualStyleBackColor = true;
@@ -426,9 +441,10 @@
             // 
             // btnNext
             // 
-            btnNext.Location = new Point(367, 5);
+            btnNext.Location = new Point(459, 6);
+            btnNext.Margin = new Padding(4, 4, 4, 4);
             btnNext.Name = "btnNext";
-            btnNext.Size = new Size(57, 29);
+            btnNext.Size = new Size(71, 36);
             btnNext.TabIndex = 13;
             btnNext.Text = "Next";
             btnNext.UseVisualStyleBackColor = true;
@@ -436,9 +452,10 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(306, 5);
+            btnSearch.Location = new Point(382, 6);
+            btnSearch.Margin = new Padding(4, 4, 4, 4);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(67, 29);
+            btnSearch.Size = new Size(84, 36);
             btnSearch.TabIndex = 13;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
@@ -446,24 +463,27 @@
             // 
             // tbSearchStart
             // 
-            tbSearchStart.Location = new Point(100, 7);
+            tbSearchStart.Location = new Point(125, 9);
+            tbSearchStart.Margin = new Padding(4, 4, 4, 4);
             tbSearchStart.Name = "tbSearchStart";
-            tbSearchStart.Size = new Size(72, 27);
+            tbSearchStart.Size = new Size(89, 31);
             tbSearchStart.TabIndex = 13;
             // 
             // tbSearch
             // 
-            tbSearch.Location = new Point(178, 8);
+            tbSearch.Location = new Point(222, 10);
+            tbSearch.Margin = new Padding(4, 4, 4, 4);
             tbSearch.Name = "tbSearch";
-            tbSearch.Size = new Size(122, 27);
+            tbSearch.Size = new Size(152, 31);
             tbSearch.TabIndex = 13;
             // 
             // btnZspace
             // 
             btnZspace.Dock = DockStyle.Left;
             btnZspace.Location = new Point(0, 0);
+            btnZspace.Margin = new Padding(4, 4, 4, 4);
             btnZspace.Name = "btnZspace";
-            btnZspace.Size = new Size(94, 40);
+            btnZspace.Size = new Size(118, 50);
             btnZspace.TabIndex = 11;
             btnZspace.Text = "Z Space";
             btnZspace.UseVisualStyleBackColor = true;
@@ -473,6 +493,7 @@
             // 
             rightSplitContainer.Dock = DockStyle.Fill;
             rightSplitContainer.Location = new Point(0, 0);
+            rightSplitContainer.Margin = new Padding(4, 4, 4, 4);
             rightSplitContainer.Name = "rightSplitContainer";
             rightSplitContainer.Orientation = Orientation.Horizontal;
             // 
@@ -483,14 +504,16 @@
             // rightSplitContainer.Panel2
             // 
             rightSplitContainer.Panel2.Controls.Add(rightBottomSplitContainer);
-            rightSplitContainer.Size = new Size(709, 919);
-            rightSplitContainer.SplitterDistance = 363;
+            rightSplitContainer.Size = new Size(887, 1151);
+            rightSplitContainer.SplitterDistance = 454;
+            rightSplitContainer.SplitterWidth = 5;
             rightSplitContainer.TabIndex = 0;
             // 
             // rightBottomSplitContainer
             // 
             rightBottomSplitContainer.Dock = DockStyle.Fill;
             rightBottomSplitContainer.Location = new Point(0, 0);
+            rightBottomSplitContainer.Margin = new Padding(4, 4, 4, 4);
             rightBottomSplitContainer.Name = "rightBottomSplitContainer";
             rightBottomSplitContainer.Orientation = Orientation.Horizontal;
             // 
@@ -501,8 +524,9 @@
             // rightBottomSplitContainer.Panel2
             // 
             rightBottomSplitContainer.Panel2.Controls.Add(traceBox);
-            rightBottomSplitContainer.Size = new Size(709, 552);
-            rightBottomSplitContainer.SplitterDistance = 275;
+            rightBottomSplitContainer.Size = new Size(887, 692);
+            rightBottomSplitContainer.SplitterDistance = 344;
+            rightBottomSplitContainer.SplitterWidth = 5;
             rightBottomSplitContainer.TabIndex = 0;
             // 
             // menuStrip1
@@ -511,47 +535,48 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, generateJSONToolStripMenuItem, saveCurrentToolStripMenuItem, backToolStripMenuItem, toolStripMenuItem2 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1643, 28);
+            menuStrip1.Padding = new Padding(8, 2, 0, 2);
+            menuStrip1.Size = new Size(2054, 33);
             menuStrip1.TabIndex = 17;
             menuStrip1.Text = "menuStrip1";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(14, 24);
+            toolStripMenuItem1.Size = new Size(16, 29);
             // 
             // generateJSONToolStripMenuItem
             // 
             generateJSONToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { withDStrongToolStripMenuItem, withuStrongToolStripMenuItem });
             generateJSONToolStripMenuItem.Name = "generateJSONToolStripMenuItem";
-            generateJSONToolStripMenuItem.Size = new Size(122, 24);
+            generateJSONToolStripMenuItem.Size = new Size(146, 29);
             generateJSONToolStripMenuItem.Text = "Generate JSON";
             // 
             // withDStrongToolStripMenuItem
             // 
             withDStrongToolStripMenuItem.Name = "withDStrongToolStripMenuItem";
-            withDStrongToolStripMenuItem.Size = new Size(180, 26);
+            withDStrongToolStripMenuItem.Size = new Size(220, 34);
             withDStrongToolStripMenuItem.Text = "With dStrong";
             withDStrongToolStripMenuItem.Click += withDStrongToolStripMenuItem_Click;
             // 
             // withuStrongToolStripMenuItem
             // 
             withuStrongToolStripMenuItem.Name = "withuStrongToolStripMenuItem";
-            withuStrongToolStripMenuItem.Size = new Size(180, 26);
+            withuStrongToolStripMenuItem.Size = new Size(220, 34);
             withuStrongToolStripMenuItem.Text = "WithuStrong";
             withuStrongToolStripMenuItem.Click += withuStrongToolStripMenuItem_Click;
             // 
             // saveCurrentToolStripMenuItem
             // 
             saveCurrentToolStripMenuItem.Name = "saveCurrentToolStripMenuItem";
-            saveCurrentToolStripMenuItem.Size = new Size(106, 24);
+            saveCurrentToolStripMenuItem.Size = new Size(128, 29);
             saveCurrentToolStripMenuItem.Text = "Save Current";
             saveCurrentToolStripMenuItem.Click += saveCurrentToolStripMenuItem_Click;
             // 
             // backToolStripMenuItem
             // 
             backToolStripMenuItem.Name = "backToolStripMenuItem";
-            backToolStripMenuItem.Size = new Size(54, 24);
+            backToolStripMenuItem.Size = new Size(64, 29);
             backToolStripMenuItem.Text = "Back";
             backToolStripMenuItem.Click += backToolStripMenuItem_Click;
             // 
@@ -559,33 +584,34 @@
             // 
             toolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { csvWithdStrongToolStripMenuItem, csvWithuStrongToolStripMenuItem });
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(113, 24);
+            toolStripMenuItem2.Size = new Size(135, 29);
             toolStripMenuItem2.Text = "Generate CSV";
             // 
             // csvWithdStrongToolStripMenuItem
             // 
             csvWithdStrongToolStripMenuItem.Name = "csvWithdStrongToolStripMenuItem";
-            csvWithdStrongToolStripMenuItem.Size = new Size(180, 26);
+            csvWithdStrongToolStripMenuItem.Size = new Size(220, 34);
             csvWithdStrongToolStripMenuItem.Text = "With dStrong";
             csvWithdStrongToolStripMenuItem.Click += csvWithdStrongToolStripMenuItem_Click;
             // 
             // csvWithuStrongToolStripMenuItem
             // 
             csvWithuStrongToolStripMenuItem.Name = "csvWithuStrongToolStripMenuItem";
-            csvWithuStrongToolStripMenuItem.Size = new Size(180, 26);
+            csvWithuStrongToolStripMenuItem.Size = new Size(220, 34);
             csvWithuStrongToolStripMenuItem.Text = "WithuStrong";
             csvWithuStrongToolStripMenuItem.Click += csvWithuStrongToolStripMenuItem_Click;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1643, 947);
+            ClientSize = new Size(2054, 1184);
             Controls.Add(mainSplitContainer);
             Controls.Add(tbTranslatedShort);
             Controls.Add(tbShortText);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(4, 4, 4, 4);
             Name = "MainForm";
             Text = "Strong's Dictionary Editor";
             Load += Form1_Load;
